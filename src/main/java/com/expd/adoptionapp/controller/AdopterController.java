@@ -1,0 +1,33 @@
+package com.expd.adoptionapp.controller;
+
+import com.expd.adoptionapp.model.Adopter;
+import com.expd.adoptionapp.service.AdopterService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/adopter")
+public class AdopterController {
+
+    AdopterService adopterService;
+
+    public AdopterController(AdopterService adopterService) {
+        this.adopterService = adopterService;
+    }
+
+    @GetMapping
+    public List<Adopter> getAllAdopters(){
+        return adopterService.getAllAdopters();
+    }
+
+    @GetMapping("/{id}")
+    public Adopter getAdopterById(@PathVariable int id){
+        return adopterService.getAdopter(id);
+    }
+
+    @PostMapping
+    public Adopter addAdopter(@RequestBody Adopter adopter){
+        return adopterService.addAdopter(adopter);
+    }
+}
