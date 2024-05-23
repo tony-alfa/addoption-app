@@ -5,7 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Adopter {
@@ -24,18 +25,18 @@ public class Adopter {
     @Column
     private LocalDate adoptionDate;
 
-    @OneToMany
-    Set<Pet> pets;
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Pet> pets = new ArrayList<>();
 
-    public Adopter(String name, String phoneNumber, LocalDate adoptionDate, Set<Pet> pets) {
+
+    public Adopter(String name, String phoneNumber, LocalDate adoptionDate) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.adoptionDate = adoptionDate;
-        this.pets = pets;
     }
 
     public Adopter(String name, String phoneNumber) {
-        this(name, phoneNumber, null, null);
+        this(name, phoneNumber, null);
     }
 
     public Adopter() {
@@ -74,13 +75,12 @@ public class Adopter {
         this.adoptionDate = adoptionDate;
     }
 
-    public Set<Pet> getPet() {
+    public List<Pet> getPets() {
         return pets;
     }
 
-    public void setPet(Set<Pet> pet) {
-        this.pets = pet;
-        this.adoptionDate = LocalDate.now();
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 
     @Override
@@ -90,7 +90,7 @@ public class Adopter {
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", adoptionDate=" + adoptionDate +
-                ", pet=" + pets +
+                ", pets=" + pets +
                 '}';
     }
 }

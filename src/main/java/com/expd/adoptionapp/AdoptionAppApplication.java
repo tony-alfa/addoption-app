@@ -21,7 +21,7 @@ public class AdoptionAppApplication {
 }
 
 
-@Component
+//@Component
 class MyRunner implements CommandLineRunner
 {
     private final AdopterService adopterService;

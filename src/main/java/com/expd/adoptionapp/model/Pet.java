@@ -18,18 +18,10 @@ public class Pet {
     private int petId;
     @Column
     private String name;
-    @Column
-    @NotNull
-    private PetType type;
+    @Enumerated(EnumType.STRING)
+    private PetType type = PetType.CAT;
     @Column
     private String breed;
-
-    private Pet(int petId, PetType type, String name, String breed) {
-        this.petId = petId;
-        this.type = type;
-        this.name = name;
-        this.breed = breed;
-    }
 
     public Pet(PetType type, String name, String breed) {
         this.type = type;
